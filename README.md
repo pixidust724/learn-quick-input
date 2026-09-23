@@ -2,19 +2,25 @@
 
 Type any Chinese word and see how to type it in **速成 (Quick)**, the input method many people in Hong Kong grew up with. The Cangjie radicals for each character tumble out of a physics-driven pile and land beneath the search box, and each character is read aloud in Cantonese.
 
+> 🚧 Work in progress: actively being built, so expect changes.
+
+![Looking up 我地今日去食乜嘢](screenshots/lookup.png)
+![Radicals raining down onto the pile](screenshots/radical-rain.png)
+
 ## Motivation
 
 Learning to type and write Traditional Chinese characters is declining, as Pinyin input and Simplified characters dominate modern digital communication.
 
 To me, a language and the way we type it are both important intangible cultural heritage. I wanted to create a piece of interactive media that helps preserve them, and at the same time a tool to train myself in typing Chinese characters.
 
+Beyond heritage, a recent conversation with a friend reminded me how cool it is to speak and type in Cantonese again.
+
 ## Features
 
-- **Quick code lookup:** type or paste any word and see each character's 速成 code (e.g. 我 → 竹戈 · `HI`), plus its full 倉頡 (Cangjie) code.
-- **A living radical pile:** the 26 Cangjie keys (日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重) fall and pile up with real physics ([Matter.js](https://brm.io/matter-js/)). Typing a character lifts its radicals out of the pile, and deleting it drops them back. You can also drag and throw them.
-- **Cantonese pronunciation (粵):** characters are spoken as you type them. Click a character to hear it again, or tap a radical in the pile.
-- **Light and dark mode**, and it works on mobile.
-- About 17,600 characters: all of Big5 plus the Hong Kong Supplementary Character Set (HKSCS), including Cantonese characters such as 咩、啲、嘅、冇、嘢.
+- Quick code lookup
+- A living radical pile
+- Cantonese pronunciation (粵)
+- Light and dark mode
 
 ## How Quick (速成) works
 
