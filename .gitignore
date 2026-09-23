@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (serve.py)
+__pycache__/
+*.pyc
+.venv/
+
+# Node, if tooling is added later
+node_modules/
+
+# Logs and local secrets
+*.log
+.env
+.env.*

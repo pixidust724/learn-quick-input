@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
+  <title>速成查碼</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23111'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='%23fff'%3E速%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&family=Noto+Sans+HK:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>try { const t = JSON.parse(localStorage.getItem('quick:theme')); if (t) document.documentElement.dataset.theme = t; } catch {}</script>
+</head>
+<body>
+  <div id="layer" class="layer" aria-hidden="true"></div>
+
+  <header class="brand">速成查碼 <span>Quick lookup</span></header>
+
+  <main class="finder">
+    <label for="q">想查咩？</label>
+    <div class="box">
+      <input id="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </div>
+    <div id="result" class="result" aria-live="polite"></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="cangjie.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
