@@ -71,7 +71,10 @@ body {
 .group.enter { animation: rise .5s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
 .slots { display: flex; gap: 2px; min-height: var(--slot); }
-.slot { width: var(--slot); height: var(--slot); display: grid; place-items: center; font-size: var(--slot); line-height: 1; color: var(--ink); }
+.slot {
+  width: var(--slot); height: var(--slot); display: grid; place-items: center; font-size: var(--slot); line-height: 1; color: var(--ink);
+  will-change: transform; /* own layer: iOS Safari otherwise doesn't repaint a radical landing inside the scrolling list */
+}
 .cap { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); white-space: nowrap; }
 .cap .ch { color: var(--ink); font-family: var(--typed-font); font-size: 14px; }
 .keys { display: flex; gap: 3px; }
