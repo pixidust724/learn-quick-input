@@ -106,6 +106,7 @@ body {
 }
 .glyph:hover::after { opacity: 1; }
 .glyph.dragging { cursor: grabbing; }
+.glyph.emoji { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-size: calc(var(--g) * 0.9); }
 .glyph.picked { pointer-events: none; z-index: 3; }
 .glyph.gone { transition: opacity .4s; opacity: 0; }
 

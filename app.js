@@ -81,11 +81,12 @@ function buildWalls() {
   Composite.add(world, walls);
 }
 
-function makeGlyph(letter, x, y, addToWorld = true) {
+// A falling piece: a radical by its letter, or (letter null) any other text, like an emoji
+function makeGlyph(letter, x, y, addToWorld = true, text = RADICALS[letter]) {
   const el = document.createElement('div');
-  el.className = 'glyph';
-  el.textContent = RADICALS[letter];
-  el.dataset.key = letter.toUpperCase();
+  el.className = letter ? 'glyph' : 'glyph emoji';
+  el.textContent = text;
+  if (letter) el.dataset.key = letter.toUpperCase();
   layer.appendChild(el);
   const s = G * 0.86;
   const body = Bodies.rectangle(x, y, s, s, {
@@ -252,6 +253,11 @@ function makeGroup(ch, info) {
       ? ` · 亦可 ${info.alts.map((a) => `${toRadicals(quickOf(a))} ${quickOf(a).toUpperCase()}`).join(' / ')}`
       : '';
     grp.title = `${ch} — 速成 ${toRadicals(info.quick)} (${info.quick.toUpperCase()}) · 倉頡 ${toRadicals(info.full)} (${info.full.toUpperCase()})${alts}`;
+  } else if (isEmoji(ch)) {
+    grp.slotEls = [];
+    grp.emoji = ch; // render() drops it into the pile
+    grp.classList.add('miss');
+    cap.innerHTML = `<span class="ch">${ch}</span><span class="full">冇速成碼 😅 跌咗落去</span>`;
   } else {
     grp.slotEls = [];
     grp.classList.add('miss');
@@ -285,8 +291,14 @@ function fitResult() {
   result.style.maxHeight = Math.max(SLOT * 2, innerHeight - top - G * 2.4) + 'px';
 }
 
+// Split into what people see as single characters, so 👍🏽 or 👨‍👩‍👧 stay whole
+const splitter = 'Segmenter' in Intl ? new Intl.Segmenter('zh-Hant', { granularity: 'grapheme' }) : null;
+const splitChars = (text) => (splitter ? Array.from(splitter.segment(text), (s) => s.segment) : Array.from(text));
+// Flags (🇭🇰) are two regional-indicator letters and keycaps (1️⃣) end in U+20E3; neither counts as pictographic
+const isEmoji = (ch) => /\p{Extended_Pictographic}|\p{Regional_Indicator}|\u20E3/u.test(ch);
+
 function render() {
-  const chars = Array.from(q.value).filter((c) => c.trim()).slice(0, 60);
+  const chars = splitChars(q.value).filter((c) => c.trim()).slice(0, 60);
 
   // Remember where current radicals are before the DOM changes, for the ones that will drop
   const lastSeen = new Map();
@@ -303,6 +315,17 @@ function render() {
   groups = nextGroups;
   result.replaceChildren(...(ordered.length ? ordered : [hint]));
   if (grew) result.scrollTop = result.scrollHeight; // follow the newest character
+
+  // Easter egg: an emoji has no Quick code, so it tumbles from its card into the pile
+  for (const grp of ordered) {
+    if (!grp.emoji || grp.dropped) continue;
+    grp.dropped = true;
+    const r = grp.querySelector('.ch').getBoundingClientRect();
+    const g = makeGlyph(null, r.left + r.width / 2, r.top + r.height / 2, true, grp.emoji);
+    Body.setVelocity(g.body, { x: rand(-3, 3), y: rand(-6, -2) });
+    Body.setAngularVelocity(g.body, rand(-0.15, 0.15));
+    trimPile();
+  }
 
   // Measure with offsets (not getBoundingClientRect) so the slide-in transform doesn't skew targets
   const box = result.getBoundingClientRect();
