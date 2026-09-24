@@ -20,86 +20,11 @@ const result = $('result');
 const layer = $('layer');
 const rand = (a, b) => a + Math.random() * (b - a);
 
-// ---------- Cantonese speech ----------
+// ---------- Toolbar ----------
 
 const store = {
   get(k, d) { try { const v = localStorage.getItem('quick:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
   set(k, v) { try { localStorage.setItem('quick:' + k, JSON.stringify(v)); } catch {} },
-};
-let soundOn = store.get('sound', true);
-let yueVoice = null;
-const hasSpeech = 'speechSynthesis' in window;
-
-function pickVoice() {
-  const yue = speechSynthesis.getVoices().filter((v) => /zh[-_]HK|yue/i.test(v.lang));
-  // Prefer an on-device voice (e.g. macOS "Sinji"); Chrome's online Google voices often fail silently
-  yueVoice = yue.find((v) => v.localService) || yue[0] || null;
-}
-if (hasSpeech) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
-
-let utterance = null; // keep a reference so Chrome doesn't garbage-collect it mid-speech
-let speakTimer = 0;
-let pending = '';
-
-// Chrome's speechSynthesis goes silent when triggered from IME typing, so first try
-// audio rendered by the macOS voice via serve.py (/speak); fall back to speechSynthesis.
-let audioOK = true;
-let audio = null;
-function speak(text) {
-  if (!soundOn || !text) return;
-  if (!audioOK) return speakSynth(text);
-  if (audio) audio.pause();
-  audio = new Audio('/speak?t=' + encodeURIComponent(text));
-  audio.onplaying = () => soundBtn.classList.add('speaking');
-  audio.onended = audio.onpause = () => soundBtn.classList.remove('speaking');
-  audio.onerror = () => { audioOK = false; speakSynth(text); }; // no /speak endpoint (e.g. not using serve.py)
-  audio.play().catch((e) => { if (e.name === 'NotAllowedError') needsTap(text); });
-}
-
-function speakSynth(text) {
-  if (!hasSpeech) return;
-  if (!yueVoice) pickVoice();
-  clearTimeout(speakTimer);
-  speechSynthesis.cancel();
-  speakTimer = setTimeout(() => {
-    utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = yueVoice ? yueVoice.lang : 'zh-HK';
-    if (yueVoice) utterance.voice = yueVoice;
-    utterance.onstart = () => soundBtn.classList.add('speaking');
-    utterance.onend = () => soundBtn.classList.remove('speaking');
-    utterance.onerror = (e) => {
-      soundBtn.classList.remove('speaking');
-      console.warn('Speech error:', e.error, yueVoice?.name);
-      // Chrome refuses speech before the page has been clicked: ask for one click
-      if (e.error === 'not-allowed') needsTap(text);
-    };
-    speechSynthesis.resume();
-    speechSynthesis.speak(utterance);
-  }, 50);
-}
-
-function needsTap(text) {
-  pending = text;
-  soundBtn.classList.add('ask');
-  soundBtn.textContent = '粵 🔊 點我開聲';
-  soundBtn.title = 'Click once to allow Cantonese sound';
-}
-
-const soundBtn = document.createElement('button');
-soundBtn.className = 'sound';
-const renderSound = () => {
-  soundBtn.textContent = soundOn ? '粵 🔊' : '粵 🔇';
-  soundBtn.title = !hasSpeech ? 'Speech not supported in this browser'
-    : yueVoice || !soundOn ? 'Cantonese pronunciation' : 'No Cantonese voice found — add one in system settings';
-};
-soundBtn.onclick = () => {
-  if (soundBtn.classList.contains('ask')) { // this click is the permission Chrome wanted
-    soundBtn.classList.remove('ask');
-    renderSound();
-    const t = pending; pending = ''; speak(t);
-    return;
-  }
-  soundOn = !soundOn; store.set('sound', soundOn); renderSound(); if (soundOn) speak('廣東話');
 };
 // Light / dark toggle: follows the system until the person picks one
 const themeBtn = document.createElement('button');
@@ -126,10 +51,8 @@ gh.rel = 'noopener';
 gh.title = 'pixidust724 on GitHub';
 gh.setAttribute('aria-label', 'GitHub');
 gh.innerHTML = '<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
-tools.append(soundBtn, themeBtn, gh);
+tools.append(themeBtn, gh);
 document.body.appendChild(tools);
-renderSound();
-if (hasSpeech) speechSynthesis.addEventListener?.('voiceschanged', renderSound);
 
 // ---------- Physics pile ----------
 
@@ -202,14 +125,12 @@ function enableDrag(g) {
     Composite.add(world, c);
     g.dragging = true;
     g.el.classList.add('dragging');
-    let moved = 0;
-    const move = (ev) => { c.pointA = { x: ev.clientX, y: ev.clientY }; moved = Math.max(moved, Math.hypot(ev.clientX - start.x, ev.clientY - start.y)); };
+    const move = (ev) => { c.pointA = { x: ev.clientX, y: ev.clientY }; };
     const up = () => {
       Composite.remove(world, c);
       g.dragging = false;
       g.el.classList.remove('dragging');
       g.el.removeEventListener('pointermove', move);
-      if (moved < 5) speak(RADICALS[g.letter]); // a tap says the radical
     };
     g.el.addEventListener('pointermove', move);
     g.el.addEventListener('pointerup', up, { once: true });
@@ -309,8 +230,7 @@ function makeGroup(ch, info) {
     const alts = info.alts.length
       ? ` · 亦可 ${info.alts.map((a) => `${toRadicals(quickOf(a))} ${quickOf(a).toUpperCase()}`).join(' / ')}`
       : '';
-    grp.title = `${ch} — 速成 ${toRadicals(info.quick)} (${info.quick.toUpperCase()}) · 倉頡 ${toRadicals(info.full)} (${info.full.toUpperCase()})${alts} · 撳一下再聽`;
-    grp.onclick = () => speak(ch);
+    grp.title = `${ch} — 速成 ${toRadicals(info.quick)} (${info.quick.toUpperCase()}) · 倉頡 ${toRadicals(info.full)} (${info.full.toUpperCase()})${alts}`;
   } else {
     grp.slotEls = [];
     grp.classList.add('miss');
@@ -389,22 +309,9 @@ function render() {
   slots = next;
 }
 
-let prev = '';
 let composing = false;
 function onChange() {
   if (composing) return;
-  const now = Array.from(q.value);
-  const old = Array.from(prev);
-  // Say only the characters that are new since last time
-  let i = 0;
-  while (i < now.length && i < old.length && now[i] === old[i]) i++;
-  // Trim the unchanged tail too, so inserting mid-word only says the new part
-  let j = 0;
-  while (j < now.length - i && j < old.length - i && now[now.length - 1 - j] === old[old.length - 1 - j]) j++;
-  const added = now.slice(i, now.length - j).join('');
-  const han = added.match(/\p{Script=Han}/gu);
-  if (han) speak(han.join(''));
-  prev = q.value;
   render();
 }
 
@@ -413,7 +320,6 @@ q.addEventListener('compositionend', () => { composing = false; onChange(); });
 q.addEventListener('input', (e) => { if (!e.isComposing) onChange(); });
 q.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { q.value = ''; onChange(); }
-  if (e.key === 'Enter' && !e.isComposing) speak(q.value); // replay the whole word
 });
 window.addEventListener('resize', () => { buildWalls(); fitResult(); });
 

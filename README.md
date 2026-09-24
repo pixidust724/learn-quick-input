@@ -1,6 +1,6 @@
 # 速成查碼 · Quick Lookup
 
-Type any Chinese word and see how to type it in **速成 (Quick)**, the input method many people in Hong Kong grew up with. The Cangjie radicals for each character tumble out of a physics-driven pile and land beneath the search box, and each character is read aloud in Cantonese.
+Type any Chinese word and see how to type it in **速成 (Quick)**, the input method many people in Hong Kong grew up with. The Cangjie radicals for each character tumble out of a physics-driven pile and land beneath the search box.
 
 > 🚧 Work in progress: actively being built, so expect changes.
 
@@ -19,7 +19,6 @@ Beyond heritage, a recent conversation with a friend reminded me how cool it is 
 
 - Quick code lookup
 - A living radical pile
-- Cantonese pronunciation (粵)
 - Light and dark mode
 
 ## How Quick (速成) works
@@ -36,20 +35,19 @@ The codes follow **Cangjie 3**, the version used by the built-in Quick/Cangjie k
 
 ## Run it locally
 
+It's a plain static site, so any static server works:
+
 ```sh
-python3 serve.py
+python3 -m http.server 8741
 ```
 
 Then open <http://127.0.0.1:8741/>.
-
-`serve.py` is a small static server with one extra endpoint, `/speak`. It uses the macOS Cantonese voice (Sinji) to turn a character into audio, because Chrome's built-in speech goes silent when triggered while typing with a Chinese input method. Without `serve.py` (for example, opened from any other static host), the page falls back to the browser's own speech.
 
 ## Credits
 
 - **Cangjie 3 code table:** [Cangjie3-Plus 倉頡三代補完計畫](https://github.com/Arthurmcarthur/Cangjie3-Plus) (MIT License, © 朱邦復（發明）/倉頡之友·馬來西亞（修訂）/倉頡三代補完計劃（修訂）). The copyright notice is kept at the top of `cangjie.js`.
 - **Physics:** [Matter.js](https://github.com/liabru/matter-js) (MIT License).
 - **Fonts:** [LXGW WenKai TC 霞鶩文楷](https://github.com/lxgw/LxgwWenkaiTC) and [Noto Sans HK](https://fonts.google.com/noto/specimen/Noto+Sans+HK), both under the SIL Open Font License, served by Google Fonts.
-- **Voice:** the macOS Cantonese voice Sinji (善怡), which is not distributed with this project.
 
 ## License
 

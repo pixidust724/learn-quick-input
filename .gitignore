@@ -9,7 +9,7 @@
 *.swp
 *~
 
-# Python (serve.py)
+# Python
 __pycache__/
 *.pyc
 .venv/
