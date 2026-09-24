@@ -39,7 +39,7 @@ body {
   margin: 0 auto; padding-top: 20vh;
 }
 .finder label {
-  display: block; font-size: 17px; font-weight: 300; letter-spacing: .32em;
+  display: block; font-size: 17px; font-weight: 700; letter-spacing: .20em;
   color: var(--muted); margin: 0 0 14px 4px;
 }
 .box {
@@ -97,9 +97,12 @@ body {
 .glyph.gone { transition: opacity .4s; opacity: 0; }
 
 @media (max-width: 600px) {
-  .finder { padding-top: 16vh; }
-  .finder label { font-size: 26px; }
-  .box input { height: 110px; font-size: 42px; }
+  /* clamp keeps it clear of the brand bar when the keyboard shrinks the viewport */
+  .finder { padding-top: clamp(56px, 10vh, 96px); }
+  .finder label { font-size: 15px; margin-bottom: 10px; }
+  .box { border-radius: 12px; }
+  .box input { height: 48px; padding: 0 16px; font-size: 18px; } /* 16px+ stops iOS zooming on focus */
+  .result { margin-top: 14px; gap: 12px 22px; }
 }
 
 .tools { position: fixed; top: 14px; right: 18px; z-index: 2; display: flex; gap: 4px; align-items: center; }
