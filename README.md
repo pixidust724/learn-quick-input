@@ -2,6 +2,14 @@
 
 Type any Chinese word and see how to type it in **速成 (Quick)**, the input method many people in Hong Kong grew up with. The Cangjie radicals for each character tumble out of a physics-driven pile and land beneath the search box.
 
+<p align="center">
+  <a href="https://pixidust724.github.io/learn-quick-input/">
+    <img src="https://img.shields.io/badge/%E2%96%B6%20Try%20it%20live-%E9%80%9F%E6%88%90%E6%9F%A5%E7%A2%BC-111111?style=for-the-badge" alt="▶ Try it live: 速成查碼" />
+  </a>
+  <br />
+  <sub>No Chinese keyboard? Tap one of the example words to see it in action.</sub>
+</p>
+
 > 🚧 Work in progress: actively being built, so expect changes.
 
 ![Looking up 我地今日去食乜嘢](screenshots/lookup.png)

@@ -113,7 +113,7 @@ Events.on(engine, 'afterUpdate', () => {
 
 function enableDrag(g) {
   g.el.addEventListener('pointerdown', (e) => {
-    if (g.picked) return;
+    if (g.picked || g.dragging || e.button !== 0) return; // main button only: right-click menus swallow the release
     e.preventDefault();
     g.el.setPointerCapture(e.pointerId);
     const start = { x: e.clientX, y: e.clientY };
@@ -126,15 +126,20 @@ function enableDrag(g) {
     g.dragging = true;
     g.el.classList.add('dragging');
     const move = (ev) => { c.pointA = { x: ev.clientX, y: ev.clientY }; };
+    // Switching apps mid-drag may never send a release, so let go on blur too
+    const drop = () => { if (g.el.hasPointerCapture(e.pointerId)) g.el.releasePointerCapture(e.pointerId); };
     const up = () => {
       Composite.remove(world, c);
       g.dragging = false;
       g.el.classList.remove('dragging');
       g.el.removeEventListener('pointermove', move);
+      removeEventListener('blur', drop);
     };
     g.el.addEventListener('pointermove', move);
-    g.el.addEventListener('pointerup', up, { once: true });
-    g.el.addEventListener('pointercancel', up, { once: true });
+    // Fires after pointerup/pointercancel and whenever capture is lost some other way,
+    // so a radical can't be left hanging in the air
+    g.el.addEventListener('lostpointercapture', up, { once: true });
+    addEventListener('blur', drop);
   });
 }
 
@@ -205,9 +210,25 @@ function trimPile() {
 
 let slots = new Map(); // key -> glyph sitting in that slot
 let groups = new Map(); // key -> group element, reused so only new characters animate in
-const hint = document.createElement('p');
+const hint = document.createElement('div');
 hint.className = 'hint';
-hint.innerHTML = '輸入任何中文字，睇速成碼<br>Type any Chinese word to see its Quick (速成) code';
+hint.innerHTML = '<p>輸入中文，睇速成碼 · Type Chinese, see its Quick code</p>'
+  + '<p class="try">或者試下 · Or try:</p>';
+// Tappable examples, so people without a Chinese input method still see it work
+const examples = document.createElement('div');
+examples.className = 'examples';
+for (const word of ['你好', '香港', '廣東話', '多謝晒', '我地今日去食乜嘢']) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = word;
+  b.onclick = () => {
+    q.value = word;
+    onChange();
+    if (matchMedia('(pointer: fine)').matches) q.focus(); // on phones, don't pop the keyboard up
+  };
+  examples.appendChild(b);
+}
+hint.appendChild(examples);
 
 function makeGroup(ch, info) {
   const grp = document.createElement('div');
