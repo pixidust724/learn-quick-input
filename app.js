@@ -179,8 +179,8 @@ let slots = new Map(); // key -> glyph sitting in that slot
 let groups = new Map(); // key -> group element, reused so only new characters animate in
 const hint = document.createElement('div');
 hint.className = 'hint';
-hint.innerHTML = '<p>輸入中文，睇速成碼 · Type Chinese, see its Quick code</p>'
-  + '<p class="try">或者試下 · Or try:</p>';
+hint.innerHTML = '<p><span class="zh" lang="zh-Hant">輸入中文，睇速成碼</span><span class="en" lang="en">Type Chinese, see its Quick code</span></p>'
+  + '<p class="try"><span class="zh" lang="zh-Hant">或者試下：</span><span class="en" lang="en">Or try:</span></p>';
 // Tappable examples, so people without a Chinese input method still see it work
 const examples = document.createElement('div');
 examples.className = 'examples';
@@ -198,7 +198,7 @@ for (const word of ['你好', '香港', '廣東話', '多謝晒', '我地今日�
 hint.appendChild(examples);
 const more = document.createElement('p');
 more.className = 'more';
-more.innerHTML = '<a href="history.html">速成點嚟㗎？ · Where did Quick come from? →</a>';
+more.innerHTML = '<a href="history.html"><span class="zh" lang="zh-Hant">速成點嚟㗎？</span><span class="en" lang="en">Where did Quick come from?</span> →</a>';
 hint.appendChild(more);
 
 function makeGroup(ch, info) {
@@ -218,20 +218,19 @@ function makeGroup(ch, info) {
       return s;
     });
     const keys = [...info.quick.toUpperCase()].map((l) => `<kbd>${l}</kbd>`).join('');
-    cap.innerHTML = `<span class="ch">${ch}</span><span class="keys">${keys}</span><span class="full">倉頡 ${toRadicals(info.full)}</span>`;
-    const alts = info.alts.length
-      ? ` · 亦可 ${info.alts.map((a) => `${toRadicals(quickOf(a))} ${quickOf(a).toUpperCase()}`).join(' / ')}`
-      : '';
-    grp.title = `${ch} — 速成 ${toRadicals(info.quick)} (${info.quick.toUpperCase()}) · 倉頡 ${toRadicals(info.full)} (${info.full.toUpperCase()})${alts}`;
+    cap.innerHTML = `<span class="ch">${ch}</span><span class="keys">${keys}</span><span class="full"><span class="zh" lang="zh-Hant">倉頡</span><span class="en" lang="en">Cangjie</span> ${toRadicals(info.full)}</span>`;
+    const alts = info.alts.map((a) => `${toRadicals(quickOf(a))} ${quickOf(a).toUpperCase()}`).join(' / ');
+    const tip = (quick, cangjie, also) => `${ch} — ${quick} ${toRadicals(info.quick)} (${info.quick.toUpperCase()}) · ${cangjie} ${toRadicals(info.full)} (${info.full.toUpperCase()})${alts ? ` · ${also} ${alts}` : ''}`;
+    setTitle(grp, tip('速成', '倉頡', '亦可'), tip('Quick', 'Cangjie', 'also'));
   } else if (isEmoji(ch)) {
     grp.slotEls = [];
     grp.emoji = ch; // render() drops it into the pile
     grp.classList.add('miss');
-    cap.innerHTML = `<span class="ch">${ch}</span><span class="full">冇速成碼 😅 跌咗落去</span>`;
+    cap.innerHTML = `<span class="ch">${ch}</span><span class="full"><span class="zh" lang="zh-Hant">冇速成碼 😅 跌咗落去</span><span class="en" lang="en">No Quick code 😅 so it fell</span></span>`;
   } else {
     grp.slotEls = [];
     grp.classList.add('miss');
-    cap.innerHTML = `<span class="ch">${ch}</span><span class="full">搵唔到</span>`;
+    cap.innerHTML = `<span class="ch">${ch}</span><span class="full"><span class="zh" lang="zh-Hant">搵唔到</span><span class="en" lang="en">Not found</span></span>`;
   }
   grp.append(row, cap);
   return grp;

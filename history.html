@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>速成源流 · Quick history</title>
-  <meta name="description" content="How Chinese found its way onto a 26-letter keyboard, from Cangjie to Quick (速成)." />
+  <meta name="description" content="中文如何走進只有二十六個字母的鍵盤：由倉頡到速成。How Chinese found its way onto a 26-letter keyboard, from Cangjie to Quick (速成)." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23111'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='%23fff'%3E速%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="history.css" />
   <script>try { const t = JSON.parse(localStorage.getItem('quick:theme')); if (t) document.documentElement.dataset.theme = t; } catch {}</script>
+  <!-- Language: the saved choice, else the browser's. Set before paint so the other language never flashes -->
+  <script>{ let l; try { l = JSON.parse(localStorage.getItem('quick:lang')); } catch {} l = l || (/^zh/i.test(navigator.language) ? 'zh' : 'en'); document.documentElement.dataset.lang = l; document.documentElement.lang = l === 'zh' ? 'zh-Hant' : 'en'; }</script>
 </head>
 <body data-page="history">
   <header class="brand"><a href="./">速成查碼 <span>Quick lookup</span></a></header>
@@ -20,78 +22,89 @@
     <section class="intro">
       <p class="eyebrow">源流 · History</p>
       <h1>由倉頡到速成 <span>From Cangjie to Quick</span></h1>
-      <p class="lede">Chinese has tens of thousands of characters. A keyboard has 26 letters. This is the story of how people made the two fit, and how Hong Kong ended up typing with 速成 (Quick).</p>
+      <p class="lede zh" lang="zh-Hant">中文字數以萬計，鍵盤卻只有二十六個字母。這是人們如何令兩者配合起來，以及香港人最終用上速成輸入法的故事。</p>
+      <p class="lede en" lang="en">Chinese has tens of thousands of characters. A keyboard has 26 letters. This is the story of how people made the two fit, and how Hong Kong ended up typing with 速成 (Quick).</p>
     </section>
 
     <ol class="timeline">
       <li>
-        <p class="when">Legend</p>
+        <p class="when"><span class="zh" lang="zh-Hant">傳說</span><span class="en" lang="en">Legend</span></p>
         <h2>倉頡造字 <span>Cangjie invents writing</span></h2>
-        <p>Chinese legend credits 倉頡 (Cangjie), a historian of the Yellow Emperor who is said to have had four eyes, with inventing writing. He is supposed to have drawn the first characters from the footprints of birds and animals. The input method is named after him.</p>
+        <p class="zh" lang="zh-Hant">相傳黃帝的史官倉頡生有四隻眼睛，並創造了文字。據說他從鳥獸的足跡得到啟發，畫出最早的漢字。倉頡輸入法就是以他命名的。</p>
+        <p class="en" lang="en">Chinese legend credits 倉頡 (Cangjie), a historian of the Yellow Emperor who is said to have had four eyes, with inventing writing. He is supposed to have drawn the first characters from the footprints of birds and animals. The input method is named after him.</p>
       </li>
       <li>
-        <p class="when">1870s</p>
+        <p class="when"><span class="zh" lang="zh-Hant">1870 年代</span><span class="en" lang="en">1870s</span></p>
         <h2>電碼 <span>Characters as numbers</span></h2>
-        <p>Telegraphs could only send numbers and letters, so the Chinese telegraph code gave each character a four-digit number. Operators looked the numbers up in codebooks or learned them by heart. It was the first practical way to send Chinese down a wire.</p>
+        <p class="zh" lang="zh-Hant">電報只能傳送數字和字母，所以中文電碼為每個漢字編上一個四位數字。報務員要翻查電碼本，或者把號碼背下來。這是第一個能把中文經電線傳送出去的實用方法。</p>
+        <p class="en" lang="en">Telegraphs could only send numbers and letters, so the Chinese telegraph code gave each character a four-digit number. Operators looked the numbers up in codebooks or learned them by heart. It was the first practical way to send Chinese down a wire.</p>
       </li>
       <li>
-        <p class="when">1910s–1940s</p>
+        <p class="when"><span class="zh" lang="zh-Hant">1910 至 1940 年代</span><span class="en" lang="en">1910s–1940s</span></p>
         <h2>打字機 <span>The Chinese typewriter</span></h2>
-        <p>Chinese typewriters held a tray of a few thousand metal characters. The typist moved an arm over the tray to pick each one. In 1947 the writer 林語堂 (Lin Yutang) built the MingKwai (明快) typewriter, which found a character through a few key presses followed by a choice from a short list. That is the same "type a code, then pick" idea that input methods use today.</p>
+        <p class="zh" lang="zh-Hant">中文打字機裝有一盤幾千個金屬字粒，打字員要移動機械臂，在字盤上逐個揀字。1947 年，作家林語堂製成明快打字機：先按幾個鍵，再從一小列候選字中選出想要的字。這正是今天輸入法「先打碼，再選字」的概念。</p>
+        <p class="en" lang="en">Chinese typewriters held a tray of a few thousand metal characters. The typist moved an arm over the tray to pick each one. In 1947 the writer 林語堂 (Lin Yutang) built the MingKwai (明快) typewriter, which found a character through a few key presses followed by a choice from a short list. That is the same "type a code, then pick" idea that input methods use today.</p>
       </li>
       <li>
-        <p class="when">1970s</p>
+        <p class="when"><span class="zh" lang="zh-Hant">1970 年代</span><span class="en" lang="en">1970s</span></p>
         <h2>中文電腦化 <span>Can a computer write Chinese?</span></h2>
-        <p>Early computers were built around the Latin alphabet, and many people doubted Chinese could keep up. Some early systems used huge keyboards with hundreds or thousands of keys. The hard part was finding a way to get any character out of a normal keyboard.</p>
+        <p class="zh" lang="zh-Hant">早期電腦以拉丁字母為基礎設計，不少人懷疑中文能否跟上。有些早期系統用上有幾百甚至幾千個鍵的巨型鍵盤。真正的難題，是如何用一個普通鍵盤打出任何一個漢字。</p>
+        <p class="en" lang="en">Early computers were built around the Latin alphabet, and many people doubted Chinese could keep up. Some early systems used huge keyboards with hundreds or thousands of keys. The hard part was finding a way to get any character out of a normal keyboard.</p>
       </li>
       <li class="key">
-        <p class="when">1976</p>
+        <p class="when"><span class="zh" lang="zh-Hant">1976 年</span><span class="en" lang="en">1976</span></p>
         <h2>倉頡輸入法 <span>Chu Bong-Foo's Cangjie method</span></h2>
-        <p>In Taiwan, 朱邦復 (Chu Bong-Foo) created a method that breaks each character down by <em>shape</em>. It uses 24 basic components, called radicals, mapped to the letters A to Y. You type the pieces of a character in the order you would write them, so it doesn't depend on how the character is pronounced in Mandarin, Cantonese or any other variety.</p>
+        <p class="zh" lang="zh-Hant">朱邦復在台灣創造了一種按<em>字形</em>拆字的方法。它以二十四個基本部件（稱為字根）對應字母 A 至 Y，按書寫的筆順輸入字的各個部分，因此不受普通話、粵語或其他方言的讀音影響。</p>
+        <p class="en" lang="en">In Taiwan, 朱邦復 (Chu Bong-Foo) created a method that breaks each character down by <em>shape</em>. It uses 24 basic components, called radicals, mapped to the letters A to Y. You type the pieces of a character in the order you would write them, so it doesn't depend on how the character is pronounced in Mandarin, Cantonese or any other variety.</p>
       </li>
       <li>
-        <p class="when">1982</p>
+        <p class="when"><span class="zh" lang="zh-Hant">1982 年</span><span class="en" lang="en">1982</span></p>
         <h2>公開 <span>Given away for free</span></h2>
-        <p>Chu gave up his patent rights so anyone could build Cangjie into their system. It spread across Taiwan and Hong Kong and is now built into almost every computer and phone that supports Traditional Chinese.</p>
+        <p class="zh" lang="zh-Hant">朱邦復放棄專利權，讓任何人都可以把倉頡輸入法加進自己的系統。倉頡因此在台灣和香港普及，今天幾乎每部支援繁體中文的電腦和手機都有內置。</p>
+        <p class="en" lang="en">Chu gave up his patent rights so anyone could build Cangjie into their system. It spread across Taiwan and Hong Kong and is now built into almost every computer and phone that supports Traditional Chinese.</p>
       </li>
       <li class="key">
-        <p class="when">1980s–1990s</p>
+        <p class="when"><span class="zh" lang="zh-Hant">1980 至 1990 年代</span><span class="en" lang="en">1980s–1990s</span></p>
         <h2>速成 <span>Quick: the shortcut</span></h2>
-        <p>Full Cangjie means breaking a character into as many as five radicals, which takes practice. 速成 (Quick, called 簡易 in Taiwan) makes it easier: you type only the <strong>first and last</strong> radical, then pick the character from a list. It is less exact but much easier to learn, so a lot of Hong Kong people picked it up from school computer lessons, ICQ and MSN.</p>
+        <p class="zh" lang="zh-Hant">完整的倉頡要把一個字拆成最多五個字根，需要練習。速成（台灣稱為簡易）把它簡化：只需輸入<strong>第一個和最後一個</strong>字根，再從清單中選字。它沒那麼準確，卻容易學得多，所以不少香港人都是在學校電腦堂、ICQ 和 MSN 上學會的。</p>
+        <p class="en" lang="en">Full Cangjie means breaking a character into as many as five radicals, which takes practice. 速成 (Quick, called 簡易 in Taiwan) makes it easier: you type only the <strong>first and last</strong> radical, then pick the character from a list. It is less exact but much easier to learn, so a lot of Hong Kong people picked it up from school computer lessons, ICQ and MSN.</p>
       </li>
       <li>
-        <p class="when">Today</p>
+        <p class="when"><span class="zh" lang="zh-Hant">今天</span><span class="en" lang="en">Today</span></p>
         <h2>手寫、拼音、語音 <span>Handwriting, Pinyin, voice</span></h2>
-        <p>Phones now let people write with a finger, type by sound or just talk. These are all convenient, but fewer people learn to take characters apart into their pieces. Shape-based methods like Cangjie and Quick also help you remember how a character is built.</p>
+        <p class="zh" lang="zh-Hant">現在用手機，可以用手指寫字、按讀音輸入，甚至直接說話。這些方法都很方便，但學習把字拆成部件的人卻愈來愈少。倉頡和速成這類字形輸入法，也有助記住一個字是怎樣構成的。</p>
+        <p class="en" lang="en">Phones now let people write with a finger, type by sound or just talk. These are all convenient, but fewer people learn to take characters apart into their pieces. Shape-based methods like Cangjie and Quick also help you remember how a character is built.</p>
       </li>
     </ol>
 
     <section class="radicals">
       <h2>二十四個字根 <span>The 24 radicals</span></h2>
-      <p>Chu arranged the radicals into four families. Hover or tap a key to see its letter.</p>
+      <p class="zh" lang="zh-Hant">朱邦復把字根分成四類。把滑鼠移到鍵上或輕按一下，就會看到對應的字母。</p>
+      <p class="en" lang="en">Chu arranged the radicals into four families. Hover or tap a key to see its letter.</p>
       <div class="families">
         <div class="family">
           <h3>哲理類 <span>Philosophy</span></h3>
-          <p>The sun, the moon and the five elements</p>
+          <p><span class="zh" lang="zh-Hant">日、月和五行</span><span class="en" lang="en">The sun, the moon and the five elements</span></p>
           <div class="keyrow" data-keys="A日 B月 C金 D木 E水 F火 G土"></div>
         </div>
         <div class="family">
           <h3>筆畫類 <span>Strokes</span></h3>
-          <p>Basic brush strokes</p>
+          <p><span class="zh" lang="zh-Hant">基本筆畫</span><span class="en" lang="en">Basic brush strokes</span></p>
           <div class="keyrow" data-keys="H竹 I戈 J十 K大 L中 M一 N弓"></div>
         </div>
         <div class="family">
           <h3>人身類 <span>Body</span></h3>
-          <p>A person and parts of the body</p>
+          <p><span class="zh" lang="zh-Hant">人和身體各部分</span><span class="en" lang="en">A person and parts of the body</span></p>
           <div class="keyrow" data-keys="O人 P心 Q手 R口"></div>
         </div>
         <div class="family">
           <h3>字形類 <span>Shapes</span></h3>
-          <p>Common character shapes</p>
+          <p><span class="zh" lang="zh-Hant">常見的字形</span><span class="en" lang="en">Common character shapes</span></p>
           <div class="keyrow" data-keys="S尸 T廿 U山 V女 W田 Y卜"></div>
         </div>
       </div>
-      <p class="aside">The other two keys are special. <kbd>X</kbd> 難 handles shapes that are hard to break down, and <kbd>Z</kbd> 重 is reserved for extra uses in some systems.</p>
+      <p class="aside zh" lang="zh-Hant">餘下兩個鍵比較特別：<kbd>X</kbd> 難 用來處理難以拆解的字形，<kbd>Z</kbd> 重 則在部分系統中留作其他用途。</p>
+      <p class="aside en" lang="en">The other two keys are special. <kbd>X</kbd> 難 handles shapes that are hard to break down, and <kbd>Z</kbd> 重 is reserved for extra uses in some systems.</p>
     </section>
 
     <section class="demo">
@@ -101,8 +114,9 @@
         <div class="pair"><span class="ch">好</span><span class="row"><b>女</b>弓<b>木</b></span><span class="arrow">→</span><span class="row"><b>女木</b></span></div>
         <div class="pair"><span class="ch">想</span><span class="row"><b>木</b>山<b>心</b></span><span class="arrow">→</span><span class="row"><b>木心</b></span></div>
       </div>
-      <p>Keep the first and last radical and drop the ones in between. That's all there is to Quick.</p>
-      <a class="cta" href="./">試下查碼 · Try the lookup →</a>
+      <p class="zh" lang="zh-Hant">保留第一個和最後一個字根，刪去中間的，速成就是這麼簡單。</p>
+      <p class="en" lang="en">Keep the first and last radical and drop the ones in between. That's all there is to Quick.</p>
+      <a class="cta" href="./"><span class="zh" lang="zh-Hant">試下查碼</span><span class="en" lang="en">Try the lookup</span> →</a>
     </section>
 
     <section class="reading">
@@ -110,7 +124,7 @@
       <ul>
         <li>Thomas S. Mullaney, <cite>The Chinese Typewriter: A History</cite> (MIT Press, 2017)</li>
         <li>Thomas S. Mullaney, <cite>The Chinese Computer: A Global History of the Information Age</cite> (MIT Press, 2024)</li>
-        <li>倉頡輸入法 on Wikipedia: <a href="https://zh.wikipedia.org/wiki/倉頡輸入法" target="_blank" rel="noopener">中文</a> · <a href="https://en.wikipedia.org/wiki/Cangjie_input_method" target="_blank" rel="noopener">English</a></li>
+        <li><span class="zh" lang="zh-Hant">維基百科上的倉頡輸入法：</span><span class="en" lang="en">倉頡輸入法 on Wikipedia: </span><a href="https://zh.wikipedia.org/wiki/倉頡輸入法" target="_blank" rel="noopener">中文</a> · <a href="https://en.wikipedia.org/wiki/Cangjie_input_method" target="_blank" rel="noopener">English</a></li>
       </ul>
     </section>
   </main>
