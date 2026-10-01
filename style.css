@@ -7,6 +7,7 @@
   --surface: #ffffff;
   --ring: rgba(0,0,0,.05);
   --dot: rgba(0, 0, 0, .13); /* dotted-page background: last number = strength */
+  --accent: #2f6fd6; /* stroke-order arrows and hints */
   --g: 56px; /* glyph size, set from JS */
   /* Fonts already on the device, for characters people type: web-font pieces would swap in one by one */
   --typed-font: 'PingFang HK', 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif;
@@ -14,9 +15,9 @@
 }
 /* Dark: follow the system unless the toggle forced light; or forced dark via the toggle */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #111111; --ink: #f2f2f2; --muted: #9a9a9a; --faint: #5c5c5c; --line: #2a2a2a; --surface: #171717; --ring: rgba(255,255,255,.06); --dot: rgba(255, 255, 255, .16); color-scheme: dark; }
+  :root:not([data-theme="light"]) { --bg: #111111; --ink: #f2f2f2; --muted: #9a9a9a; --faint: #5c5c5c; --line: #2a2a2a; --surface: #171717; --ring: rgba(255,255,255,.06); --dot: rgba(255, 255, 255, .16); --accent: #79a6f2; color-scheme: dark; }
 }
-:root[data-theme="dark"] { --bg: #111111; --ink: #f2f2f2; --muted: #9a9a9a; --faint: #5c5c5c; --line: #2a2a2a; --surface: #171717; --ring: rgba(255,255,255,.06); --dot: rgba(255, 255, 255, .16); color-scheme: dark; }
+:root[data-theme="dark"] { --bg: #111111; --ink: #f2f2f2; --muted: #9a9a9a; --faint: #5c5c5c; --line: #2a2a2a; --surface: #171717; --ring: rgba(255,255,255,.06); --dot: rgba(255, 255, 255, .16); --accent: #79a6f2; color-scheme: dark; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
@@ -144,3 +145,83 @@ body {
 :root[data-lang="zh"] .en, :root[data-lang="en"] .zh { display: none; }
 .gh { display: grid; place-items: center; width: 34px; height: 34px; color: var(--muted); border-radius: 50%; transition: color .2s; }
 .gh:hover { color: var(--ink); }
+
+/* ---------- Stroke practice ---------- */
+.group.writable { cursor: pointer; }
+.pen {
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface); cursor: pointer;
+  font: 12px/1 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; padding: 3px 6px;
+  transition: border-color .2s, transform .2s;
+}
+.group:hover .pen, .pen:focus-visible { border-color: var(--muted); transform: rotate(-12deg) scale(1.1); }
+
+.practice {
+  position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 16px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: fade .2s ease-out;
+}
+.practice[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; } }
+.sheet {
+  position: relative; width: min(680px, 100%); max-height: 100%; overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px 18px;
+  box-shadow: 0 24px 60px -30px rgba(0,0,0,.45);
+}
+.sheet h2 { margin: 0 0 16px; font-size: 15px; font-weight: 400; letter-spacing: .12em; color: var(--muted); display: flex; align-items: baseline; gap: 10px; }
+.sheet .pch { font-size: 28px; color: var(--ink); font-family: var(--typed-font); letter-spacing: 0; }
+.close {
+  position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border: 0; border-radius: 50%;
+  background: none; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer;
+}
+.close:hover { color: var(--ink); background: var(--ring); }
+
+.boards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.boards figure { margin: 0; }
+.board {
+  position: relative; aspect-ratio: 1; border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  background: var(--bg);
+}
+.board > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.board .writer { position: absolute; inset: 0; touch-action: none; cursor: crosshair; }
+.grid line { stroke: var(--line); stroke-width: 1; stroke-dasharray: 4 4; }
+.grid line.diag { stroke-dasharray: 2 6; }
+.boards figcaption { margin-top: 8px; font-size: 12px; letter-spacing: .1em; color: var(--muted); text-align: center; }
+
+/* Guide: outlined strokes, dashed arrows, numbers. Written strokes fill in, the next one glows */
+.strokes .s { fill: var(--surface); stroke: var(--ink); stroke-width: 1.2; transition: fill .3s; }
+.strokes .s.done { fill: var(--ink); }
+.strokes .s.next { fill: color-mix(in srgb, var(--accent) 22%, var(--surface)); }
+.strokes .a { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-dasharray: 3 3; stroke-linecap: round; stroke-linejoin: round; transition: opacity .3s; }
+.strokes marker path { fill: var(--accent); }
+.strokes .n {
+  font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace; fill: #d43c3c; text-anchor: middle; dominant-baseline: central;
+  paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; transition: opacity .3s;
+}
+.strokes .a.done, .strokes .n.done { opacity: 0; }
+.strokes .a.next { stroke-width: 2.2; stroke-dasharray: none; }
+
+.status { min-height: 1.6em; margin: 14px 0 10px; text-align: center; font-size: 15px; letter-spacing: .06em; }
+.actions, .picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.actions button, .picker button {
+  font: inherit; font-size: 14px; letter-spacing: .08em; color: var(--ink); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 16px;
+  transition: border-color .2s;
+}
+.actions button:hover, .picker button:hover { border-color: var(--muted); }
+.picker { margin-top: 14px; }
+.picker button { font-family: var(--typed-font); font-size: 17px; padding: 3px 12px; }
+.picker button.on { border-color: var(--ink); }
+.note { margin: 14px 0 0; font-size: 11px; line-height: 1.6; color: var(--faint); text-align: center; letter-spacing: .04em; }
+.sheet.missing .boards, .sheet.missing .actions { display: none; }
+
+/* Phones: one big board to write on, with the arrows and numbers drawn over it */
+.sheet.compact .boards { grid-template-columns: 1fr; }
+.sheet.compact .boards figure:first-child { display: none; }
+.strokes.overlay { pointer-events: none; }
+.strokes.overlay .a:not(.next) { opacity: .45; }
+.strokes.overlay .a.done, .strokes.overlay .n.done { opacity: 0; }
+
+@media (max-width: 600px) {
+  .practice { padding: 10px; }
+  .sheet { padding: 16px 14px 12px; }
+}

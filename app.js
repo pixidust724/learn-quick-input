@@ -196,6 +196,10 @@ for (const word of ['你好', '香港', '廣東話', '多謝晒', '我地今日�
   examples.appendChild(b);
 }
 hint.appendChild(examples);
+const write = document.createElement('p');
+write.className = 'try';
+write.innerHTML = '<span class="zh" lang="zh-Hant">查到嘅字旁邊撳 ✏️，就可以練筆順</span><span class="en" lang="en">Then press ✏️ next to a result to practise writing it</span>';
+hint.appendChild(write);
 const more = document.createElement('p');
 more.className = 'more';
 more.innerHTML = '<a href="history.html"><span class="zh" lang="zh-Hant">速成點嚟㗎？</span><span class="en" lang="en">Where did Quick come from?</span> →</a>';
@@ -210,6 +214,9 @@ function makeGroup(ch, info) {
   const cap = document.createElement('div');
   cap.className = 'cap';
   if (info) {
+    // ✏️ opens stroke practice; the rest of the card does too, for a bigger target
+    grp.classList.add('writable');
+    grp.addEventListener('click', () => openPractice(ch, splitChars(q.value).filter((c) => CJ[c])));
     grp.slotEls = [...info.quick].map((l) => {
       const s = document.createElement('span');
       s.className = 'slot';
@@ -218,7 +225,10 @@ function makeGroup(ch, info) {
       return s;
     });
     const keys = [...info.quick.toUpperCase()].map((l) => `<kbd>${l}</kbd>`).join('');
-    cap.innerHTML = `<span class="ch">${ch}</span><span class="keys">${keys}</span><span class="full"><span class="zh" lang="zh-Hant">倉頡</span><span class="en" lang="en">Cangjie</span> ${toRadicals(info.full)}</span>`;
+    cap.innerHTML = `<span class="ch">${ch}</span><span class="keys">${keys}</span><span class="full"><span class="zh" lang="zh-Hant">倉頡</span><span class="en" lang="en">Cangjie</span> ${toRadicals(info.full)}</span>`
+      + '<button type="button" class="pen">✏️</button>';
+    setTitle(cap.querySelector('.pen'), `練 ${ch} 嘅筆順`, `Practise writing ${ch}`);
+    cap.querySelector('.pen').setAttribute('aria-label', `練筆順 · Practise writing ${ch}`);
     const alts = info.alts.map((a) => `${toRadicals(quickOf(a))} ${quickOf(a).toUpperCase()}`).join(' / ');
     const tip = (quick, cangjie, also) => `${ch} — ${quick} ${toRadicals(info.quick)} (${info.quick.toUpperCase()}) · ${cangjie} ${toRadicals(info.full)} (${info.full.toUpperCase()})${alts ? ` · ${also} ${alts}` : ''}`;
     setTitle(grp, tip('速成', '倉頡', '亦可'), tip('Quick', 'Cangjie', 'also'));

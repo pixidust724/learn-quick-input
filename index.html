@@ -27,9 +27,29 @@
     <div id="result" class="result" aria-live="polite"></div>
   </main>
 
+  <div id="practice" class="practice" hidden role="dialog" aria-modal="true" aria-labelledby="practice-title">
+    <div class="sheet">
+      <button type="button" class="close" aria-label="Close · 關閉">×</button>
+      <h2 id="practice-title"><span class="pch"></span> <span class="zh" lang="zh-Hant">練筆順</span><span class="en" lang="en">Stroke practice</span></h2>
+      <div class="boards">
+        <figure><div class="board guide"></div><figcaption><span class="zh" lang="zh-Hant">筆順</span><span class="en" lang="en">Stroke order</span></figcaption></figure>
+        <figure><div class="board pad"></div><figcaption><span class="zh" lang="zh-Hant">跟住寫</span><span class="en" lang="en">Your turn: draw each stroke</span></figcaption></figure>
+      </div>
+      <p class="status" aria-live="polite"></p>
+      <div class="actions">
+        <button type="button" data-act="watch"><span class="zh" lang="zh-Hant">示範</span><span class="en" lang="en">Watch</span></button>
+        <button type="button" data-act="again"><span class="zh" lang="zh-Hant">再寫</span><span class="en" lang="en">Start over</span></button>
+      </div>
+      <div class="picker"></div>
+      <p class="note"><span class="zh" lang="zh-Hant">筆順資料來自 Make Me a Hanzi，以內地標準為主，少數字同香港寫法唔同。</span><span class="en" lang="en">Stroke data from Make Me a Hanzi. It follows the mainland standard, so a few characters differ from how Hong Kong writes them.</span></p>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="cangjie.js"></script>
   <script src="toolbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js"></script>
   <script src="app.js"></script>
+  <script src="practice.js"></script>
 </body>
 </html>
