@@ -12,8 +12,8 @@ Type any Chinese word and see how to type it in **速成 (Quick)**, the input me
 
 > 🚧 Work in progress: actively being built, so expect changes.
 
-![Practising the stroke order of 香, five strokes in](screenshots/stroke.png)
 ![Radicals raining down onto the pile](screenshots/radical-rain.png)
+![Practising the stroke order of 香, five strokes in](screenshots/stroke.png)
 
 ## Motivation
 
