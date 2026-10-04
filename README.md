@@ -55,6 +55,8 @@ Then open <http://127.0.0.1:8741/>.
 
 - **Cangjie 3 code table:** [Cangjie3-Plus 倉頡三代補完計畫](https://github.com/Arthurmcarthur/Cangjie3-Plus) (MIT License, © 朱邦復（發明）/倉頡之友·馬來西亞（修訂）/倉頡三代補完計劃（修訂）). The copyright notice is kept at the top of `cangjie.js`.
 - **Physics:** [Matter.js](https://github.com/liabru/matter-js) (MIT License).
+- **Stroke practice:** [Hanzi Writer](https://github.com/chanind/hanzi-writer) (MIT License).
+- **Stroke data:** [hanzi-writer-data](https://github.com/chanind/hanzi-writer-data), derived from [Make Me a Hanzi](https://github.com/skishore/makemeahanzi) and Arphic's fonts (Arphic Public License).
 - **Fonts:** [LXGW WenKai TC 霞鶩文楷](https://github.com/lxgw/LxgwWenkaiTC) and [Noto Sans HK](https://fonts.google.com/noto/specimen/Noto+Sans+HK), both under the SIL Open Font License, served by Google Fonts.
 
 ## License
