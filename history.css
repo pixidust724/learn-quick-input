@@ -49,10 +49,10 @@ body { overflow: auto; height: auto; min-height: 100%; }
 }
 .rkey::after {
   content: attr(data-key); position: absolute; right: 3px; top: 1px;
-  font: 600 9px ui-monospace, 'SF Mono', Menlo, monospace; color: var(--faint); transition: color .15s;
+  font: 600 10px ui-monospace, 'SF Mono', Menlo, monospace; color: var(--ink); opacity: 0; transition: opacity .15s;
 }
 .rkey:hover, .rkey:focus { border-color: var(--muted); transform: translateY(-1px); }
-.rkey:hover::after, .rkey:focus::after { color: var(--ink); }
+.rkey:hover::after, .rkey:focus::after { opacity: 1; }
 .aside { font-size: 14px; color: var(--muted); }
 .aside kbd, .story kbd {
   font: 600 11px/1 ui-monospace, 'SF Mono', Menlo, monospace; color: var(--ink);
