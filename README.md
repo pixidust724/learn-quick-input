@@ -1,6 +1,6 @@
 # 速成查碼 · Quick Lookup
 
-Type any Chinese word and see how to type it in **速成 (Quick)**, the input method many people in Hong Kong grew up with. The Cangjie radicals for each character tumble out of a physics-driven pile and land beneath the search box.
+Type any Chinese word and see how to type it in **速成 (Quick)**, the input method many people in Hong Kong grew up with. The Cangjie radicals for each character tumble out of a physics-driven pile and land beneath the search box. You can also practise writing each character stroke by stroke, and read how Quick came to be.
 
 <p align="center">
   <a href="https://www.carrielau.com/learn-quick-input/">
@@ -12,7 +12,7 @@ Type any Chinese word and see how to type it in **速成 (Quick)**, the input me
 
 > 🚧 Work in progress: actively being built, so expect changes.
 
-![Looking up 我地今日去食乜嘢](screenshots/lookup.png)
+![Practising the stroke order of 香, five strokes in](screenshots/stroke.png)
 ![Radicals raining down onto the pile](screenshots/radical-rain.png)
 
 ## Motivation
@@ -25,9 +25,12 @@ Beyond heritage, a recent conversation with a friend reminded me how cool it is 
 
 ## Features
 
-- Quick code lookup
-- A living radical pile
-- Light and dark mode
+- **Quick code lookup:** type any Chinese word to see its Quick code, with the full Cangjie code alongside.
+- **A living radical pile:** each character's radicals tumble into a physics-driven pile below the search box.
+- **Stroke practice:** press ✏️ next to a result to watch the stroke order, then write the character yourself on a 米字格 practice grid, with feedback on each stroke.
+- **History page:** a timeline from the legend of 倉頡 to Quick, plus the 24 Cangjie radicals and how Quick shortens Cangjie codes.
+- **Bilingual:** switch between Traditional Chinese and English. The site remembers your choice and otherwise follows your browser's language.
+- **Light and dark mode**
 
 ## How Quick (速成) works
 
